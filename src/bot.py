@@ -11,10 +11,6 @@ import sys
 import nest_asyncio
 nest_asyncio.apply()
 
-import asyncio
-import nest_asyncio
-nest_asyncio.apply()
-
 from telegram.ext import Application, MessageHandler, filters
 
 from src.config.db import connect_db
