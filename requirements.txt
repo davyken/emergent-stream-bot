@@ -4,7 +4,6 @@ pymongo==4.6.3
 python-dotenv==1.0.1
 anthropic==0.25.1
 resend==0.7.2
-apscheduler>=3.11.0
 aiohttp==3.9.3
 beautifulsoup4==4.12.3
 rapidfuzz

@@ -11,7 +11,10 @@ import sys
 import nest_asyncio
 nest_asyncio.apply()
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import asyncio
+import nest_asyncio
+nest_asyncio.apply()
+
 from telegram.ext import Application, MessageHandler, filters
 
 from src.config.db import connect_db
@@ -119,29 +122,25 @@ async def main():
         MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.PRIVATE, handle_unknown_text)
     )
 
-    # 4. Scheduler APScheduler
-    scheduler = AsyncIOScheduler()
+    # 4. Simple asyncio scheduler
+    async def run_schedules():
+        while True:
+            try:
+                await check_and_notify(app.bot)
+            except Exception as e:
+                logger.error(f"Film watcher error: {e}")
+            await asyncio.sleep(FILMS_SCRAPE_INTERVAL * 60)
 
-    # Surveillance films toutes les X minutes
-    scheduler.add_job(
-        lambda: asyncio.create_task(check_and_notify(app.bot)),
-        trigger="interval",
-        minutes=FILMS_SCRAPE_INTERVAL,
-        id="film_watcher",
-        max_instances=1,
-    )
+    async def run_daily_renewal():
+        while True:
+            try:
+                await run_renewal_checks(app.bot)
+            except Exception as e:
+                logger.error(f"Renewal job error: {e}")
+            await asyncio.sleep(86400)
 
-    # Cron renouvellement chaque nuit à 00:05
-    scheduler.add_job(
-        lambda: asyncio.create_task(run_renewal_checks(app.bot)),
-        trigger="cron",
-        hour=0,
-        minute=5,
-        id="renewal_job",
-        max_instances=1,
-    )
-
-    scheduler.start()
+    asyncio.create_task(run_schedules())
+    asyncio.create_task(run_daily_renewal())
     logger.info(f"⏱️ Watcher films : toutes les {FILMS_SCRAPE_INTERVAL} minutes")
     logger.info("🌙 Cron renouvellement : chaque nuit à 00h05")
 
