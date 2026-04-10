@@ -9,7 +9,7 @@ import asyncio
 import logging
 import sys
 
-from telegram.ext import Application, MessageHandler, filters
+from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
 from src.config.db import connect_db
 from src.config.settings import BOT_TOKEN, FILMS_SCRAPE_INTERVAL
@@ -143,7 +143,3 @@ async def main():
     logger.info("📡 En attente de messages...")
 
     await app.run_polling(drop_pending_updates=True)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
