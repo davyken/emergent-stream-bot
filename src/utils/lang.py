@@ -1,4 +1,4 @@
-from thefuzz import fuzz
+from rapidfuzz import fuzz
 
 # Mots-clés pour détecter l'anglais
 EN_KEYWORDS = [
