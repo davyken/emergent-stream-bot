@@ -8,6 +8,8 @@
 import asyncio
 import logging
 import sys
+import nest_asyncio
+nest_asyncio.apply()
 
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 

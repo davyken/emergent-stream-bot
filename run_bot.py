@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
-
-import threading
-from src.bot import main
 import asyncio
-
-def run_bot():
-    asyncio.run(main())
+import nest_asyncio
+nest_asyncio.apply()
 
 if __name__ == "__main__":
-    t = threading.Thread(target=run_bot, daemon=True)
-    t.start()
-    t.join()
+    from src.bot import main
+    asyncio.run(main())
