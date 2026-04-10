@@ -8,8 +8,8 @@
 import asyncio
 import logging
 import sys
-import nest_asyncio
-nest_asyncio.apply()
+# import nest_asyncio
+# nest_asyncio.apply()
 
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
@@ -144,4 +144,4 @@ async def main():
     logger.info("🚀 Emerging-Stream Bot démarré !")
     logger.info("📡 En attente de messages...")
 
-    await app.run_polling(drop_pending_updates=True, stop_signals=False)
+    await app.run_polling(drop_pending_updates=True)

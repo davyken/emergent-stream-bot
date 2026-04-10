@@ -42,8 +42,9 @@ async def fetch_films_from_server() -> list[dict]:
     films = []
 
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(FILMS_SERVER_URL, headers=headers, timeout=aiohttp.ClientTimeout(total=15)) as resp:
+        timeout = aiohttp.ClientTimeout(total=15)
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.get(FILMS_SERVER_URL, headers=headers) as resp:
                 content_type = resp.headers.get("Content-Type", "")
 
                 # ── CAS 1 : API JSON ──────────────────────────────────────
