@@ -144,4 +144,4 @@ async def main():
     logger.info("🚀 Emerging-Stream Bot démarré !")
     logger.info("📡 En attente de messages...")
 
-    await app.run_polling(drop_pending_updates=True)
+    await app.run_polling(drop_pending_updates=True, stop_signals=False)
