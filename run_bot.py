@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+import threading
+from src.bot import main
+import asyncio
+
+def run_bot():
+    asyncio.run(main())
+
 if __name__ == "__main__":
-    from src.bot import main
-    import asyncio
-    
-    async def run():
-        await main()
-    
-    with asyncio.Runner() as runner:
-        runner.run(run())
+    t = threading.Thread(target=run_bot, daemon=True)
+    t.start()
+    t.join()
