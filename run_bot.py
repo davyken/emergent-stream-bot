@@ -3,8 +3,8 @@ import sys
 import os
 
 # Patch sys.path to ensure stdlib is found first
-stdlib = '/usr/lib/python3.12'
-if stdlib not in sys.path:
+stdlib = f'/usr/lib/python{sys.version_info.major}.{sys.version_info.minor}'
+if os.path.exists(stdlib) and stdlib not in sys.path:
     sys.path.insert(0, stdlib)
 
 # Pre-import broken modules before any other imports
