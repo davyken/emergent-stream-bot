@@ -8,8 +8,6 @@
 import asyncio
 import logging
 import sys
-# import nest_asyncio
-# nest_asyncio.apply()
 
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
@@ -52,7 +50,6 @@ async def handle_unknown_text(update, context):
 
     lang = user.get("langue", "fr")
 
-    # Essayer de répondre via l'IA si c'est une vraie question
     from src.ai.claude import ask_claude
     text = update.message.text or ""
     if len(text) > 5:
@@ -64,7 +61,6 @@ async def handle_unknown_text(update, context):
         except Exception:
             pass
 
-    # Réponse par défaut
     if lang == "fr":
         msg = (
             "😊 Je ne suis pas sûr de comprendre...\n\n"
@@ -87,61 +83,71 @@ async def handle_unknown_text(update, context):
     await update.message.reply_text(msg, parse_mode="Markdown")
 
 
-# ─── Démarrage du bot ─────────────────────────────────────────────────────
-async def main():
-    # 1. Connexion MongoDB
+# ─── Background tasks ──────────────────────────────────────────────────────
+async def run_schedules(bot):
+    while True:
+        try:
+            await check_and_notify(bot)
+        except Exception as e:
+            logger.error(f"Film watcher error: {e}")
+        await asyncio.sleep(FILMS_SCRAPE_INTERVAL * 60)
+
+
+async def run_daily_renewal(bot):
+    while True:
+        try:
+            await run_renewal_checks(bot)
+        except Exception as e:
+            logger.error(f"Renewal job error: {e}")
+        await asyncio.sleep(86400)
+
+
+# ─── post_init : appelé par PTB dans son propre event loop ────────────────
+async def post_init(app: Application) -> None:
+    # 1. Connexion MongoDB (on est dans l'event loop de PTB)
     await connect_db()
 
-    # 2. Créer l'application Telegram
-    app = Application.builder().token(BOT_TOKEN).build()
+    # 2. Lancer les tâches de fond
+    asyncio.create_task(run_schedules(app.bot))
+    asyncio.create_task(run_daily_renewal(app.bot))
 
-    # 3. Enregistrer tous les handlers (l'ordre est important !)
-    app.add_handler(get_onboarding_handler())                # /start → FSM inscription
+    logger.info(f"⏱️ Watcher films : toutes les {FILMS_SCRAPE_INTERVAL} minutes")
+    logger.info("🌙 Cron renouvellement : chaque nuit à 00h05")
+    logger.info("🚀 Emerging-Stream Bot démarré !")
+    logger.info("📡 En attente de messages...")
 
-    for handler in get_subscription_handlers():             # /abonnements + callbacks plans
+
+# ─── Démarrage du bot ─────────────────────────────────────────────────────
+def main():
+    """Point d'entrée synchrone — PTB gère son propre event loop."""
+    app = (
+        Application.builder()
+        .token(BOT_TOKEN)
+        .post_init(post_init)   # ← toute l'init async se fait ici
+        .build()
+    )
+
+    # Enregistrer tous les handlers (l'ordre est important !)
+    app.add_handler(get_onboarding_handler())
+
+    for handler in get_subscription_handlers():
         app.add_handler(handler)
 
-    for handler in get_payment_handlers():                  # Photo → admin
+    for handler in get_payment_handlers():
         app.add_handler(handler)
 
-    for handler in get_admin_handlers():                    # Boutons approve/reject
+    for handler in get_admin_handlers():
         app.add_handler(handler)
 
-    for handler in get_account_handlers():                  # /moncompte /monacces /aide
+    for handler in get_account_handlers():
         app.add_handler(handler)
 
-    for handler in get_canal_handlers():                    # IA dans le canal
+    for handler in get_canal_handlers():
         app.add_handler(handler)
 
-    # Handler fallback pour les messages non reconnus
     app.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.PRIVATE, handle_unknown_text)
     )
 
-    # 4. Simple asyncio scheduler
-    async def run_schedules():
-        while True:
-            try:
-                await check_and_notify(app.bot)
-            except Exception as e:
-                logger.error(f"Film watcher error: {e}")
-            await asyncio.sleep(FILMS_SCRAPE_INTERVAL * 60)
-
-    async def run_daily_renewal():
-        while True:
-            try:
-                await run_renewal_checks(app.bot)
-            except Exception as e:
-                logger.error(f"Renewal job error: {e}")
-            await asyncio.sleep(86400)
-
-    asyncio.create_task(run_schedules())
-    asyncio.create_task(run_daily_renewal())
-    logger.info(f"⏱️ Watcher films : toutes les {FILMS_SCRAPE_INTERVAL} minutes")
-    logger.info("🌙 Cron renouvellement : chaque nuit à 00h05")
-
-    # 5. Lancer le bot
-    logger.info("🚀 Emerging-Stream Bot démarré !")
-    logger.info("📡 En attente de messages...")
-
-    await app.run_polling(drop_pending_updates=True)
+    # Appel synchrone — PTB crée et gère son propre event loop
+    app.run_polling(drop_pending_updates=True)
