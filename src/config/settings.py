@@ -49,8 +49,17 @@ PLANS = {
         "prix": int(os.getenv("PRICE_FAMILLE", "7500")),
         "description": "Tout Premium • 6 écrans • Contrôle parental",
         "emoji": "👑"
+    },
+    "trial_24h": {
+        "nom": "🎁 Essai 24h",
+        "prix": 0,
+        "description": "24h gratuit • Accès complet",
+        "emoji": "🎁",
+        "is_trial": True,
+        "duree_heures": 24
     }
 }
 
 SUBSCRIPTION_DURATION_DAYS = int(os.getenv("SUBSCRIPTION_DURATION_DAYS", "31"))
+TRIAL_DURATION_HOURS = 24
 SERVER_ACCESS_LINK = os.getenv("SERVER_ACCESS_LINK")

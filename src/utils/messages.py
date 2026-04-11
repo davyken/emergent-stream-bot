@@ -207,6 +207,37 @@ def msg_approved(prenom: str, plan_key: str, code: str, expiration: str, lang="f
             f"Enjoy *{prenom}*! 🎬🍿"
         )
 
+
+def msg_admin_ask_code(prenom: str, chat_id: int, tx_id: str, lang="fr") -> str:
+    if lang == "fr":
+        return (
+            f"📝 *Entrer le code d'activation*\n\n"
+            f"Pour approuver l'abonnement de *{prenom}*, "
+            f"envoie-moi le code d'activation que l'utilisateur devra utiliser sur le serveur.\n\n"
+            f"🔐 *Message privé — répond ici directement avec le code*"
+        )
+    else:
+        return (
+            f"📝 *Enter the activation code*\n\n"
+            f"To approve *{prenom}'s subscription, "
+            f"send me the activation code the user will use on the server.\n\n"
+            f"🔐 *Private message — reply here directly with the code*"
+        )
+
+
+def msg_admin_code_thanks(lang="fr") -> str:
+    if lang == "fr":
+        return "✅ *Merci !* L'utilisateur va recevoir son code d'activation 🎉"
+    else:
+        return "✅ *Thanks!* The user will receive their activation code 🎉"
+
+
+def msg_admin_cancel(lang="fr") -> str:
+    if lang == "fr":
+        return "❌ *Abbreviation annulée.*"
+    else:
+        return "❌ *Approval cancelled.*"
+
 def msg_rejected(lang="fr") -> str:
     if lang == "fr":
         return (
@@ -216,7 +247,7 @@ def msg_rejected(lang="fr") -> str:
             "• Le montant ne corresponde pas\n"
             "• Le nom de référence soit incorrect\n\n"
             "Réessaie en t'assurant que tout est correct "
-            "et renvoie-moi une nouvelle capture 📸\n\n"
+            "et envoie-moi une nouvelle capture 📸\n\n"
             "Des questions ? Tape /aide 😊"
         )
     else:
@@ -228,6 +259,44 @@ def msg_rejected(lang="fr") -> str:
             "• Wrong reference name\n\n"
             "Please try again and send a new screenshot 📸\n\n"
             "Questions? Type /help 😊"
+        )
+
+
+def msg_trialRejected(lang="fr") -> str:
+    if lang == "fr":
+        return (
+            "😕 *Désolé*, ta demande d'essai gratuit a été refusée.\n\n"
+            "Tu peux still会选择 un abonnement payant pour bénéficier de nos services ! 🎬\n\n"
+            "👉 /abonnements — Voir les offres"
+        )
+    else:
+        return (
+            "😕 *Sorry*, your free trial request has been denied.\n\n"
+            "You can choose a paid subscription to enjoy our services! 🎬\n\n"
+            "👉 /subscriptions — View plans"
+        )
+
+
+def msg_trialApproved(prenom: str, code: str, expiration: str, lang="fr") -> str:
+    if lang == "fr":
+        return (
+            f"🎉 *Essai gratuit activé, {prenom} !* 🎁\n\n"
+            f"⏱️ Valable jusqu'au : *{expiration}*\n\n"
+            f"🔑 *Ton code d'accès :*\n"
+            f"`{code}` _(appuie pour copier)_\n\n"
+            f"🔗 *Accès au serveur :*\n"
+            f"{SERVER_ACCESS_LINK}\n\n"
+            f"Profite bien de ces 24h gratuites ! 🎬🍿"
+        )
+    else:
+        return (
+            f"🎉 *Free trial activated, {prenom}!* 🎁\n\n"
+            f"⏱️ Valid until: *{expiration}*\n\n"
+            f"🔑 *Your access code:*\n"
+            f"`{code}` _(tap to copy)_\n\n"
+            f"🔗 *Server access:*\n"
+            f"{SERVER_ACCESS_LINK}\n\n"
+            f"Enjoy your 24h free trial! 🎬🍿"
         )
 
 
