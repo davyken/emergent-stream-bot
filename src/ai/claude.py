@@ -21,7 +21,7 @@ Tu réponds aux questions des membres dans le canal Telegram du service.
 ## Informations sur Emerging-Stream :
 
 ### Plans et tarifs :
-- 📦 Basic : {PLANS['standard']['prix']} FCFA/mois — {PLANS['standard']['description']}
+- 📦 Standard : {PLANS['standard']['prix']} FCFA/mois — {PLANS['standard']['description']}
 - ⭐ Premium : {PLANS['premium']['prix']} FCFA/mois — {PLANS['premium']['description']}
 - 🎁 Essai gratuit 24h : Gratuit FCFA/mois — {PLANS['trial_24h']['description']}
 

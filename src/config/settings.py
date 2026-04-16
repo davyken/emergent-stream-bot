@@ -33,7 +33,7 @@ ORANGE_MONEY_NAME = os.getenv("ORANGE_MONEY_NAME", "EMERGING STREAM")
 # Abonnements
 PLANS = {
     "standard": {
-        "nom": "📦 Basic",
+        "nom": "📦 Standard",
         "prix": int(os.getenv("PRICE_STANDARD", "1000")),
         "description": "Accès complet • Streaming SD • Téléchargement",
         "emoji": "📦"
