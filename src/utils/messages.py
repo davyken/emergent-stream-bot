@@ -3,7 +3,7 @@ Tous les messages du bot en français et anglais.
 Chaque message a plusieurs variantes pour paraître plus humain.
 """
 import random
-from src.config.settings import CHANNEL_LINK, PLANS, ORANGE_MONEY_NUMBER, ORANGE_MONEY_NAME, SERVER_ACCESS_LINK
+from src.config.settings import CHANNEL_LINK, PLANS, ORANGE_MONEY_NUMBER, ORANGE_MONEY_NAME, MTN_MONEY_NUMBER, MTN_MONEY_NAME, SERVER_ACCESS_LINK
 
 def r(variants: list) -> str:
     """Choisit aléatoirement une variante de message."""
@@ -142,10 +142,13 @@ def msg_payment_instructions(plan_key: str, prenom: str, lang="fr") -> str:
         return (
             f"Super choix *{prenom}* ! 🙌 Le plan *{plan['nom']}* c'est excellent !\n\n"
             f"💳 *Comment payer :*\n\n"
-            f"📱 *Numéro Orange Money :*\n"
+            f"📱 *Orange Money :*\n"
             f"   `{ORANGE_MONEY_NUMBER}` _(appuie pour copier)_\n"
             f"   Nom : *{ORANGE_MONEY_NAME}*\n\n"
-            f"💰 *Montant EXACT :* `{plan['prix']:,} FCFA`\n".replace(",", " ") +
+            f"📱 *MTN Mobile Money :*\n"
+            f"   `{MTN_MONEY_NUMBER}` _(appuie pour copier)_\n"
+            f"   Nom : *{MTN_MONEY_NAME}*\n\n"
+            f"💰 *Montant EXACT :* `{plan['prix']:,}FCFA`\n".replace(",", " ") +
             f"📝 *Objet du transfert :* `{prenom.upper()}-{plan_key.upper()}`\n\n"
             f"⏱️ Une fois le paiement effectué :\n"
             f"📸 Fais une *capture d'écran* de la confirmation\n"
@@ -156,10 +159,13 @@ def msg_payment_instructions(plan_key: str, prenom: str, lang="fr") -> str:
         return (
             f"Great choice *{prenom}*! 🙌 *{plan['nom']}* is awesome!\n\n"
             f"💳 *How to pay:*\n\n"
-            f"📱 *Orange Money Number:*\n"
+            f"📱 *Orange Money :*\n"
             f"   `{ORANGE_MONEY_NUMBER}` _(tap to copy)_\n"
             f"   Name: *{ORANGE_MONEY_NAME}*\n\n"
-            f"💰 *Exact Amount:* `{plan['prix']:,} FCFA`\n".replace(",", " ") +
+            f"📱 *MTN Mobile Money :*\n"
+            f"   `{MTN_MONEY_NUMBER}` _(tap to copy)_\n"
+            f"   Name: *{MTN_MONEY_NAME}*\n\n"
+            f"💰 *Exact Amount:* `{plan['prix']:,}FCFA`\n".replace(",", " ") +
             f"📝 *Transfer reference:* `{prenom.upper()}-{plan_key.upper()}`\n\n"
             f"⏱️ Once you've paid:\n"
             f"📸 Take a *screenshot* of the confirmation\n"
