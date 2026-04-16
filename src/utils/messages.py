@@ -135,17 +135,6 @@ def msg_subscriptions(lang="fr") -> str:
             f"   ✓ {p['trial_24h']['description']}\n\n"
             "👇 *Tap the plan you want:*"
         ).replace(",", " ")
-else:
-        return (
-            "🎬 *Choose your Emerging-Stream plan!*\n\n"
-            f"{p['standard']['emoji']} *STANDARD* — {p['standard']['prix']:,}FCFA/month\n"
-            f"   ✓ {p['standard']['description']}\n\n"
-            f"{p['premium']['emoji']} *PREMIUM* — {p['premium']['prix']:,}FCFA/month\n"
-            f"   ✓ {p['premium']['description']}\n\n"
-            f"{p['trial_24h']['emoji']} *24H TRIAL* — Free\n"
-            f"   ✓ {p['trial_24h']['description']}\n\n"
-            "👇 *Tap the plan you want:*"
-        ).replace(",", " ")
 
 def msg_payment_instructions(plan_key: str, prenom: str, lang="fr") -> str:
     plan = PLANS[plan_key]
