@@ -21,6 +21,9 @@ EMAIL_FROM_NAME = os.getenv("EMAIL_FROM_NAME", "Emerging-Stream")
 # Anthropic
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
+# Render (for ping to prevent sleeping)
+RENDER_URL = os.getenv("RENDER_URL")
+
 # Serveur films
 FILMS_SERVER_URL = os.getenv("FILMS_SERVER_URL")
 FILMS_SERVER_API_KEY = os.getenv("FILMS_SERVER_API_KEY", "")

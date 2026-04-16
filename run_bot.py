@@ -21,8 +21,20 @@ def start_health_server():
     port = int(os.environ.get("PORT", 8000))
     HTTPServer(("0.0.0.0", port), HealthCheck).serve_forever()
 
+def ping_render_server():
+    from src.config.settings import RENDER_URL
+    if not RENDER_URL:
+        return
+    while True:
+        try:
+            urllib.request.urlopen(RENDER_URL, timeout=30)
+        except Exception:
+            pass
+        time.sleep(300)
+
 if __name__ == "__main__":
     threading.Thread(target=start_health_server, daemon=True).start()
+    threading.Thread(target=ping_render_server, daemon=True).start()
 
     from src.bot import main
     main()
