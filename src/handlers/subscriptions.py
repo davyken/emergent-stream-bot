@@ -20,7 +20,7 @@ async def cmd_abonnements(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lang = user.get("langue", "fr")
     keyboard = [
         [
-            InlineKeyboardButton("📦 Standard", callback_data="plan_standard"),
+            InlineKeyboardButton("📦 Basic", callback_data="plan_standard"),
             InlineKeyboardButton("⭐ Premium", callback_data="plan_premium"),
         ],
         [

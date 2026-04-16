@@ -113,13 +113,13 @@ def msg_registration_complete(prenom: str, ville: str, telephone: str, email: st
 
 def msg_subscriptions(lang="fr") -> str:
     p = PLANS
-if lang == "fr":
+    if lang == "fr":
         return (
             "🎬 *Choisis ta formule Emerging-Stream !*\n\n"
-            f"{p['standard']['emoji']} *STANDARD* — {p['standard']['prix']:,}FCFA/mois\n"
-            f"   ✓ {p['standard']['description']}\n\n"
+            f"{p['standard']['emoji']} *BASIC* — {p['standard']['prix']:,}FCFA/mois\n"
+            f"   ✓ {p['standard']['description'].replace('•', '• ')}\n\n"
             f"{p['premium']['emoji']} *PREMIUM* — {p['premium']['prix']:,}FCFA/mois\n"
-            f"   ✓ {p['premium']['description']}\n\n"
+            f"   ✓ {p['premium']['description'].replace('•', '• ')}\n\n"
             f"{p['trial_24h']['emoji']} *ESSAI 24H* — Gratuit\n"
             f"   ✓ {p['trial_24h']['description']}\n\n"
             "👇 *Clique sur la formule qui te convient :*"
@@ -127,10 +127,10 @@ if lang == "fr":
     else:
         return (
             "🎬 *Choose your Emerging-Stream plan!*\n\n"
-            f"{p['standard']['emoji']} *STANDARD* — {p['standard']['prix']:,}FCFA/month\n"
-            f"   ✓ {p['standard']['description']}\n\n"
+            f"{p['standard']['emoji']} *BASIC* — {p['standard']['prix']:,}FCFA/month\n"
+            f"   ✓ {p['standard']['description'].replace('•', '• ')}\n\n"
             f"{p['premium']['emoji']} *PREMIUM* — {p['premium']['prix']:,}FCFA/month\n"
-            f"   ✓ {p['premium']['description']}\n\n"
+            f"   ✓ {p['premium']['description'].replace('•', '• ')}\n\n"
             f"{p['trial_24h']['emoji']} *24H TRIAL* — Free\n"
             f"   ✓ {p['trial_24h']['description']}\n\n"
             "👇 *Tap the plan you want:*"

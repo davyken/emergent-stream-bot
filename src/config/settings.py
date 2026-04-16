@@ -33,21 +33,21 @@ ORANGE_MONEY_NAME = os.getenv("ORANGE_MONEY_NAME", "EMERGING STREAM")
 # Abonnements
 PLANS = {
     "standard": {
-        "nom": "📦 Standard",
+        "nom": "📦 Basic",
         "prix": int(os.getenv("PRICE_STANDARD", "1000")),
-        "description": "5 000+ chaînes • HD • 1 écran",
+        "description": "Accès complet • Streaming SD • Téléchargement",
         "emoji": "📦"
     },
     "premium": {
         "nom": "⭐ Premium",
         "prix": int(os.getenv("PRICE_PREMIUM", "2500")),
-        "description": "10 000+ chaînes • 4K • 3 écrans • Offline",
+        "description": "Basic + 2 connexions • Streaming HD • Suggestion contenus • Support prioritaire",
         "emoji": "⭐"
     },
     "trial_24h": {
         "nom": "🎁 Essai gratuit 24h",
         "prix": 0,
-        "description": "24h gratuit • Accès complet",
+        "description": "Accès Basic gratuit",
         "emoji": "🎁",
         "is_trial": True,
         "duree_heures": 24
