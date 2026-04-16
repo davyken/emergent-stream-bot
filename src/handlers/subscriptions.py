@@ -20,12 +20,11 @@ async def cmd_abonnements(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lang = user.get("langue", "fr")
     keyboard = [
         [
-            InlineKeyboardButton("⚡ Starter", callback_data="plan_starter"),
+            InlineKeyboardButton("📦 Standard", callback_data="plan_standard"),
             InlineKeyboardButton("⭐ Premium", callback_data="plan_premium"),
-            InlineKeyboardButton("👑 Famille", callback_data="plan_famille"),
         ],
         [
-            InlineKeyboardButton("🎁 Essai 24h", callback_data="plan_trial_24h"),
+            InlineKeyboardButton("🎁 Essai gratuit 24h", callback_data="plan_trial_24h"),
         ]
     ]
     await update.message.reply_text(

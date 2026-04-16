@@ -13,12 +13,12 @@ TRIGGER_KEYWORDS = [
     "prix", "combien", "abonnement", "payer", "comment", "aide", "help",
     "accès", "acces", "lien", "film", "serie", "streaming", "connexion",
     "marche", "fonctionne", "problème", "erreur", "code", "activer",
-    "starter", "premium", "famille", "orange money", "fcfa",
+    "standard", "premium", "essai", "orange money", "fcfa",
     "inscription", "inscrire", "compte", "créer",
     # Anglais
     "price", "how", "subscribe", "pay", "access", "link", "work",
     "problem", "error", "activate", "account", "create", "register",
-    "plan", "cost", "money",
+    "plan", "cost", "money", "trial", "free",
 ]
 
 
